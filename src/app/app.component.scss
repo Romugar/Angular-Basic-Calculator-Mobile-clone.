@@ -1,0 +1,128 @@
+#main-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: royalblue;
+  background-image: linear-gradient(navy, royalblue);
+  user-select: none;
+}
+
+.calc-container {
+  position: absolute;
+  display: grid;
+  color: darkgray;
+  grid-template-columns: 100px 100px 100px 100px;
+  grid-template-rows: 100px 100px 100px 100px 100px 100px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: gray;
+  grid-column-gap: 1px;
+  grid-row-gap: 1px;
+  border-radius: 10px;
+  box-shadow: 5px 5px rgb(42, 47, 54);
+}
+
+.symbol {
+  background-color: rgb(56, 63, 73);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.number {
+  background-color: rgb(42, 47, 54);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+}
+
+.number:active {
+	position:relative;
+  top:1px;
+  opacity: 0.8;
+}
+
+.symbol:active {
+	position:relative;
+  top:1px;
+  opacity: 0.8;
+}
+
+.result:active {
+	position:relative;
+  top:1px;
+  opacity: 0.8;
+}
+
+.result {
+  background-color: rgb(141, 78, 0);
+}
+
+.result-display {
+  grid-column-start: span 4;
+  background-color: rgb(56, 63, 73);
+  border-radius: 10px 10px 0px 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: white;
+}
+
+.display1 {
+  font-size: 20px;
+  margin-bottom: -5px;
+}
+
+.display2 {
+  font-size: 30px;
+}
+
+.zero {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  border-radius: 0px 0px 0px 10px;
+  border-collapse: separate;
+}
+
+.result {
+  grid-column-start: 4;
+  grid-row-start: 5;
+  grid-row-end: 7;
+  border-radius: 0px 0px 10px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 40px;
+}
+
+.divide,
+.multiply,
+.minus,
+.plus,
+.clear-display {
+  font-size: 40px;
+}
+
+@media (max-width: 600px) {
+  .calc-container {
+    grid-template-columns: 80px 80px 80px 80px;
+    grid-template-rows: 80px 80px 80px 80px 80px 80px;
+}
+.display1 {
+  font-size: 16px;
+  margin-bottom: 0px;
+}
+
+.display2 {
+  font-size: 23px;
+}
+}
+
