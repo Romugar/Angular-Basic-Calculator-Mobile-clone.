@@ -70,6 +70,7 @@ del() {
   if (this.resultTag) {
     this.dataArray = ['0'];
     this.resultTag = false;
+    this.permitsDot = true;
   }
 
   let lastString = this.dataArray[this.dataArray.length - 1];
@@ -142,6 +143,10 @@ calculate() {
 
   if (this.dataArray[0] === 'NaN' || this.dataArray[0] === 'Infinity') {
     this.dataArray = ['0'];
+  }
+
+  if (this.dataArray[0].includes('.')) {
+    this.permitsDot = false;
   }
 }
 
