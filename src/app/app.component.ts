@@ -48,6 +48,7 @@ add(value: string) {
       if (this.resultTag) {
         this.dataArray = [''];
         this.resultTag = false;
+        this.permitsDot = true;
       }
       if (lastString[0] === '0' && lastString.length === 1) {
         this.dataArray[this.dataArray.length - 1] = value;
