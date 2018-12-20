@@ -12,35 +12,46 @@ dataArray = ['0'];
 mainDisplay = '';
 permitsDot = true;
 resultTag = false;
+operators = ['/', '*', '-', '+'];
 
 add(value: string) {
-  this.resultTag = false;
-  const operators = ['/', '*', '-', '+'];
   const lastString = this.dataArray[this.dataArray.length - 1];
+
+
   switch (value) {
     case '/': case '*': case '-': case '+':
-      if (!operators.includes(lastString[0]) && lastString[lastString.length - 1] !== '.') {
+      if (!this.operators.includes(lastString[0]) && lastString[lastString.length - 1] !== '.') {
         this.dataArray.push(value);
         this.permitsDot = true;
+        this.resultTag = false;
       }
       break;
     case '.':
-      if (lastString.length > 0 && this.permitsDot && !operators.includes(lastString[0])) {
+      if (lastString.length > 0 && this.permitsDot && !this.operators.includes(lastString[0])) {
         this.dataArray[this.dataArray.length - 1] = this.dataArray[this.dataArray.length - 1] + value;
         this.permitsDot = false;
+        this.resultTag = false;
       }
       break;
     case '0':
-      if (operators.includes(lastString[0])) {
+      if (this.resultTag) {
+        this.dataArray = [''];
+        this.resultTag = false;
+      }
+      if (this.operators.includes(lastString[0])) {
         this.dataArray.push(value);
       } else if (lastString[0] !== '0' || lastString.length > 1) {
         this.dataArray[this.dataArray.length - 1] = this.dataArray[this.dataArray.length - 1] + value;
       }
       break;
     default:
+      if (this.resultTag) {
+        this.dataArray = [''];
+        this.resultTag = false;
+      }
       if (lastString[0] === '0' && lastString.length === 1) {
         this.dataArray[this.dataArray.length - 1] = value;
-      } else if (operators.includes(lastString[0])) {
+      } else if (this.operators.includes(lastString[0])) {
         this.dataArray.push(value);
       } else {
         this.dataArray[this.dataArray.length - 1] = this.dataArray[this.dataArray.length - 1] + value;
@@ -61,11 +72,10 @@ del() {
     this.resultTag = false;
   }
 
-  const operators = ['/', '*', '-', '+'];
   let lastString = this.dataArray[this.dataArray.length - 1];
   const deletedValue = this.mainDisplay[this.mainDisplay.length - 1];
 
-  if (operators.includes(deletedValue)) {
+  if (this.operators.includes(deletedValue)) {
     this.dataArray.splice(-1, 1);
   } else if (deletedValue === '.') {
     lastString = lastString.slice(0, -1);
@@ -76,7 +86,6 @@ del() {
     lastString = lastString.slice(0, -1);
     this.dataArray.splice(-1, 1);
     this.dataArray.push(lastString);
-    this.permitsDot = true;
   } else if (lastString.length === 1 && this.dataArray.length > 1) {
     this.dataArray.splice(-1, 1);
   } else {
@@ -85,9 +94,18 @@ del() {
 }
 
 calculate() {
-  this.permitsDot = true;
   this.resultTag = true;
   this.subDisplay = this.mainDisplay + '=';
+  const lastString = this.dataArray[this.dataArray.length - 1];
+
+  if (lastString[lastString.length - 1] === '.') {
+    this.dataArray[this.dataArray.length - 1] = this.dataArray[this.dataArray.length - 1].slice(0, -1);
+    this.permitsDot = true;
+  }
+
+  if (this.operators.includes(this.dataArray[this.dataArray.length - 1])) {
+    this.dataArray.splice(-1, 1);
+   }
 
   while (this.dataArray.includes('*') || this.dataArray.includes('/')) {
     const firstCoincidence = this.dataArray.findIndex(function(value) {
@@ -121,6 +139,10 @@ calculate() {
     }
   }
   this.dataArray[0] = this.dataArray[0].slice(0, 23);
+
+  if (this.dataArray[0] === 'NaN' || this.dataArray[0] === 'Infinity') {
+    this.dataArray = ['0'];
+  }
 }
 
 ngOnInit() {
@@ -129,6 +151,7 @@ ngOnInit() {
 
 ngDoCheck() {
   this.mainDisplay = this.dataArray.join('');
+  console.log(this.dataArray);
 }
 
 }
