@@ -151,7 +151,6 @@ ngOnInit() {
 
 ngDoCheck() {
   this.mainDisplay = this.dataArray.join('');
-  console.log(this.dataArray);
 }
 
 }
